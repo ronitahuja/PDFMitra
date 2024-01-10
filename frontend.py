@@ -1,5 +1,6 @@
 from model import extract_text_from_pdf, bert
 from chatmodel import fun
+from grammarmodel import grammar_check_model
 import streamlit as st
 
 st.set_page_config(layout="wide")
@@ -58,6 +59,19 @@ def question_and_ans(uploaded_file,input_text):
             conversation_chain=fun(extracted_text)
             st.session_state.conversation_chain=conversation_chain
             handleuser_input(user_question)
+            
+def grammar_check(uploaded_file,input_text):
+    with st.spinner("In progress"):
+        extracted_text=""
+        if uploaded_file is not None: extracted_text=extract_text_from_pdf(uploaded_file)
+        else : extracted_text=input_text
+        col1,col2=st.columns(2)
+        with col1:
+            st.info("Original text")
+            st.write(extracted_text)
+        with col2:
+            st.info("Corrected text")
+            st.write(grammar_check_model(extracted_text))
     
     
     
@@ -65,7 +79,8 @@ def main():
     selected_section=""
     section_options=[
         "Summarize",
-        "Q/A with PDF"
+        "Q/A with PDF",
+        "Grammar Check"
     ]
     with st.sidebar:
         st.subheader("select file")
@@ -79,6 +94,8 @@ def main():
         summarize(uploaded_file,input_text)
     elif selected_section=="Q/A with PDF":
         question_and_ans(uploaded_file,input_text)
+    elif selected_section=="Grammar Check":
+        grammar_check(uploaded_file,input_text)
     
     
 if __name__ =="__main__":
