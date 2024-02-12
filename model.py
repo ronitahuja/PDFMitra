@@ -8,7 +8,7 @@ def extract_text_from_pdf(pdf_file):
     for page_num in range(len(pdf_reader.pages)):
         text+=pdf_reader.pages[page_num].extract_text()
     return text
-def bert(text,max_size):
+def bart(text,max_size):
     model_name = "facebook/bart-large-cnn"
     tokenizer = BartTokenizer.from_pretrained(model_name)
     model = BartForConditionalGeneration.from_pretrained(model_name)

@@ -1,7 +1,6 @@
 import os
-from langchain.chains import RetrievalQA,ConversationalRetrievalChain
+from langchain.chains import ConversationalRetrievalChain
 from langchain.llms import HuggingFaceHub
-from langchain.prompts import PromptTemplate
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceInstructEmbeddings
